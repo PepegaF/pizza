@@ -1,8 +1,12 @@
-@import '../variables.scss';
+@import '../variables';
 
 .categories {
-  ul {
-    display: flex;
+
+  &__container {
+   padding-right: 30px;
+   display: grid;
+   grid-template-columns: repeat(6, 1fr);
+   grid-template-rows: repeat(1, 1fr);
 
     li {
       background-color: #f9f9f9;

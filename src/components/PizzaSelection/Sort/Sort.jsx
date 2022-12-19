@@ -1,17 +1,22 @@
 import React from 'react';
 import { useState } from 'react';
-
+import { setSortType } from '../../../reducers/pizzaSelectionReducer';
+import s from './Sort.module.scss'
+import { useDispatch } from 'react-redux';
 const Sort = () => {
+   const dispatch = useDispatch()
    const sortArr = ['популярности', 'цене', 'алфавиту']
+   const sortArrBack = ['rating', 'price', 'title']
    const [open, setOpen] = useState(false);
    const [activeIndex, setActiveIndex] = useState(0);
    const changeSort = (i) => {
       setActiveIndex(i)
+      dispatch(setSortType(sortArrBack[i]))
       setOpen(false)
    }
    return (
-      <div className="sort">
-         <div className="sort__label">
+      <div className={s.sort}>
+         <div className={s.sort__label}>
             <svg
                width="10"
                height="6"
@@ -28,10 +33,10 @@ const Sort = () => {
             <span onClick={() => setOpen(!open)}>{sortArr[activeIndex]}</span>
          </div>
          {open &&
-            <div className="sort__popup">
+            <div className={s.sort__popup}>
                <ul>
                   {sortArr.map((el, i) =>
-                     <li key={i} className={activeIndex === i ? 'active' : ''} onClick={() => changeSort(i)}>{el}</li>
+                     <li key={i} className={activeIndex === i ? s.active : ''} onClick={() => changeSort(i)}>{el}</li>
                   )}
                </ul>
             </div>
