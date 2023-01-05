@@ -1,9 +1,12 @@
 import React from 'react';
 import s from './Button.module.scss'
+import { useSelector } from 'react-redux';
 
-const Button = () => {
+const Button = ({ addToCart, id }) => {
+   const cartItem = useSelector(state => state.cart.cartPizzas.find(obj => obj.id === id))
+   const addedCount = cartItem ? cartItem.count : 0
    return (
-      <button className={`${s.button} ${s.buttonOutline} ${s.buttonAdd}`}>
+      <button onClick={addToCart} className={`${s.button} ${s.buttonOutline} ${s.buttonAdd}`}>
          <svg
             width="12"
             height="12"
@@ -16,8 +19,8 @@ const Button = () => {
                fill="white"
             />
          </svg>
-         <span>Добавить</span>
-         <i>0</i>
+         <span >Добавить</span>
+         <i>{addedCount > 0 && addedCount}</i>
       </button>
    );
 }

@@ -1,38 +1,56 @@
 import React from 'react';
-import axios from 'axios';
 import { useEffect, useState } from 'react';
 import PizzaList from './../components/PizzaList/PizzaList';
 import PizzaSelection from '../components/PizzaSelection/PizzaSelection';
-import { useSelector } from 'react-redux';
-import ReactPaginate from 'react-paginate';
+import Pagination from './../components/Pagination/Pagination';
+import qs from 'qs';
+import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate, useParams, useLocation } from 'react-router-dom';
+import { getPizzaItems } from './../redux/paginationReducer';
+import { setSelection } from '../redux/pizzaSelectionReducer';
 
 const Home = () => {
+   const location = useLocation().search
+   const navigate = useNavigate()
+   const dispatch = useDispatch()
    const { sortType, categoriesType, searching } = useSelector(state => state.selection)
-   const [pizzaItems, setPizzaItems] = useState([]);
-   const [pizzaIsLoading, setPizzaIsLoading] = useState(true);
-   const category = categoriesType > 0 ? `category=${categoriesType}` : ''
-   const search = searching ? `search=${searching}` : ''
-   const getPizzaItems = async (sortBy, category, search) => {
-      const response = await axios.get(`https://639cb95942e3ad69273a707b.mockapi.io/items?sortBy=${sortBy}&${category}&${search}`)
-      setPizzaItems(response.data)
-      setPizzaIsLoading(false)
+   const { currentPage, perPage, totalCount, pizzaItems, isLoading } = useSelector(state => state.pagination)
+   const totalPages = Math.ceil(totalCount / perPage)
+   const fetchPizzas = (sortType, categoriesType, searching, currentPage) => {
+      const category = categoriesType > 0 ? `category=${categoriesType}` : ''
+      const search = searching ? `search=${searching}` : ''
+      const pagination = `page=${currentPage}&limit=${perPage}`
+      const sort = `sortBy=${sortType}`
+      dispatch(getPizzaItems({ sort, category, search, pagination }))
    }
-   // const searchPizzaItem = async (search) => {
-   //    const response = await axios.get(`https://639cb95942e3ad69273a707b.mockapi.io/items?search=${search}`)
-   //    setPizzaItems(response.data)
-   //    console.log(response.data);
-   // }
+
    useEffect(() => {
-      console.log('render');
-      getPizzaItems(sortType, category, search)
+      if (location) {
+         const url = qs.parse(location.substring(1))
+         dispatch(setSelection(url))
+         fetchPizzas(...Object.values(url))
+      } else fetchPizzas(sortType, categoriesType, searching, currentPage)
+   }, [location]);
+
+   useEffect(() => {
+      const queryString = qs.stringify({
+         sortType,
+         categoriesType,
+         searching,
+         currentPage
+      })
+      navigate(`?${queryString}`)
+   }, [sortType, categoriesType, searching, currentPage]);
+
+
+   useEffect(() => {
       window.scrollTo(0, 0)
-      // searchPizzaItem(searching)
-   }, [sortType, categoriesType, searching]);
+   }, []);
    return (
       <div className="container">
          <PizzaSelection />
-         <PizzaList pizzaItems={pizzaItems} pizzaIsLoading={pizzaIsLoading} />
-         {/* <Pagination  currentPage={currentPage} totalCount={pizzaItems.legth} pageSize={6}/> */}
+         <PizzaList pizzaItems={pizzaItems} isLoading={isLoading} />
+         {/* <Pagination /> */}
       </div>
    );
 }

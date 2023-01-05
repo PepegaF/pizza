@@ -1,21 +1,38 @@
 import React from 'react';
-import { useState } from 'react';
-import { setSortType } from '../../../reducers/pizzaSelectionReducer';
+import { useState, useRef } from 'react';
 import s from './Sort.module.scss'
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { setSortType } from '../../../redux/pizzaSelectionReducer';
+import { useEffect } from 'react';
 const Sort = () => {
    const dispatch = useDispatch()
+   const { sortType } = useSelector(state => state.selection)
    const sortArr = ['популярности', 'цене', 'алфавиту']
    const sortArrBack = ['rating', 'price', 'title']
    const [open, setOpen] = useState(false);
    const [activeIndex, setActiveIndex] = useState(0);
+   const sortRef = useRef()
    const changeSort = (i) => {
       setActiveIndex(i)
       dispatch(setSortType(sortArrBack[i]))
       setOpen(false)
    }
+
+   useEffect(() => {
+      const handleClickOutside = (e) => {
+         if (!e.path.includes(sortRef.current)) setOpen(false)
+      }
+      document.body.addEventListener('click', handleClickOutside)
+      return () => {
+         document.body.removeEventListener('click', handleClickOutside)
+      }
+   }, []);
+
+   useEffect(() => {
+      setActiveIndex(sortArrBack.indexOf(sortType))
+   }, [sortType]);
    return (
-      <div className={s.sort}>
+      <div ref={sortRef} className={s.sort}>
          <div className={s.sort__label}>
             <svg
                width="10"
