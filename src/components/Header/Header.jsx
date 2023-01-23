@@ -3,13 +3,14 @@ import { NavLink, useLocation } from 'react-router-dom';
 import pizzaLogo from '../../assets/img/pizza-logo.svg'
 import CartBtn from './CartBtn/CartBtn';
 import PizzaSearch from './PizzaSearch/PizzaSearch';
+import s from './Header.module.scss'
 const Header = () => {
    const location = useLocation()
    return (
-      <div className="header">
-         <div className="container">
+      <div className={s.header}>
+         <div className={`${s.container} ${'container'}`}>
             <NavLink to={'./home'}>
-               <div className="header__logo">
+               <div className={s.headerLogo}>
                   <img width="38" src={pizzaLogo} alt="Pizza logo" />
                   <div>
                      <h1 >React Pizza</h1>

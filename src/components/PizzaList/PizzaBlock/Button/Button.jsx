@@ -1,12 +1,12 @@
 import React from 'react';
-import s from './Button.module.scss'
 import { useSelector } from 'react-redux';
+import s from './Button.module.scss'
 
 const Button = ({ addToCart, id }) => {
    const cartItem = useSelector(state => state.cart.cartPizzas.find(obj => obj.id === id))
    const addedCount = cartItem ? cartItem.count : 0
    return (
-      <button onClick={addToCart} className={`${s.button} ${s.buttonOutline} ${s.buttonAdd}`}>
+      <button onClick={addToCart} className={`${s.button} ${s.buttonOutline} ${addedCount > 0 ? s.buttonAdd : ''}`}>
          <svg
             width="12"
             height="12"

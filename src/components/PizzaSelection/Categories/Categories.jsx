@@ -2,7 +2,7 @@ import React from 'react';
 import { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { setCategoriesType } from '../../../redux/pizzaSelectionReducer';
-// import s from './Categories.module.scss'
+import s from './Categories.module.scss'
 
 const Categories = () => {
    const dispatch = useDispatch()
@@ -17,10 +17,10 @@ const Categories = () => {
       setActiveIndex(Number(categoriesType))
    }, [categoriesType]);
    return (
-      <div className="categories">
-         <ul className='categories__container'>
+      <div className='categories'>
+         <ul className={s.categoriesContainer}>
             {listOfCategories.map((item, index) =>
-               <li key={index} className={activeIndex === index ? 'active' : ''} onClick={() => changeCategories(index)}>{item}</li>
+               <li key={index} className={activeIndex === index ? s.active : ''} onClick={() => changeCategories(index)}>{item}</li>
             )}
          </ul>
       </div>

@@ -8,6 +8,13 @@ export const getPizzaItems = createAsyncThunk(
       return response.data
    }
 )
+// export const getOnePizzaItem = createAsyncThunk(
+//    'paginator/getOnePizzaItem',
+//    async function ({ id }) {
+//       const response = await api.getOnePizza(id)
+//       return response.data
+//    }
+// )
 
 const paginationReducer = createSlice({
    name: 'pagination',

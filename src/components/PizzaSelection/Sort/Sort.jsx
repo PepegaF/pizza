@@ -1,9 +1,10 @@
 import React from 'react';
 import { useState, useRef } from 'react';
-import s from './Sort.module.scss'
 import { useDispatch, useSelector } from 'react-redux';
 import { setSortType } from '../../../redux/pizzaSelectionReducer';
 import { useEffect } from 'react';
+import s from './Sort.module.scss'
+
 const Sort = () => {
    const dispatch = useDispatch()
    const { sortType } = useSelector(state => state.selection)
@@ -20,7 +21,7 @@ const Sort = () => {
 
    useEffect(() => {
       const handleClickOutside = (e) => {
-         if (!e.path.includes(sortRef.current)) setOpen(false)
+         if (!e.composedPath().includes(sortRef.current)) setOpen(false)
       }
       document.body.addEventListener('click', handleClickOutside)
       return () => {
