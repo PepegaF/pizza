@@ -1,13 +1,14 @@
 import React from 'react';
 import { useEffect, useState } from 'react';
-import PizzaList from './../components/PizzaList/PizzaList';
-import PizzaSelection from '../components/PizzaSelection/PizzaSelection';
-import Pagination from './../components/Pagination/Pagination';
+import Pagination from '../components/Pagination/Pagination';
 import qs from 'qs';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, useParams, useLocation } from 'react-router-dom';
-import { getPizzaItems } from './../redux/paginationReducer';
+import { changeCurrentPage, getPizzaItems, setCurrentPage } from '../redux/paginationReducer';
 import { setSelection } from '../redux/pizzaSelectionReducer';
+import { useInView } from 'react-intersection-observer';
+import PizzaSelection from '../components/PizzaSelection/PizzaSelection';
+import PizzaList from '../components/PizzaList/PizzaList';
 
 const Home = () => {
    const location = useLocation().search
@@ -23,11 +24,23 @@ const Home = () => {
       const sort = `sortBy=${sortType}`
       dispatch(getPizzaItems({ sort, category, search, pagination }))
    }
+   const { ref, inView } = useInView({
+      threshold: 0.5
+   })
+   useEffect(() => {
+      if (inView === true && currentPage < totalPages) {
+
+         console.log(2);
+         dispatch(changeCurrentPage())
+         fetchPizzas(sortType, categoriesType, searching, currentPage)
+      }
+   }, [currentPage, inView]);
 
    useEffect(() => {
       if (location) {
          const url = qs.parse(location.substring(1))
          dispatch(setSelection(url))
+         dispatch(setCurrentPage(Number(url.currentPage)))
          fetchPizzas(...Object.values(url))
       } else fetchPizzas(sortType, categoriesType, searching, currentPage)
    }, [location]);
@@ -51,6 +64,7 @@ const Home = () => {
       <div className="container">
          <PizzaSelection />
          <PizzaList pizzaItems={pizzaItems} isLoading={isLoading} />
+         <div ref={ref} className='lastElement'></div>
          {/* <Pagination /> */}
       </div>
    );

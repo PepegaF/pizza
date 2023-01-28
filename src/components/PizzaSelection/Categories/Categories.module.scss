@@ -1,7 +1,6 @@
 @import '../../../scss/variables.scss';
 
 .categories {
-
   &Container {
    padding-right: 30px;
    display: grid;
@@ -9,13 +8,15 @@
    grid-template-rows: repeat(1, 1fr);
 
     li {
+      display: flex;
+      justify-content: center;
       background-color: #f9f9f9;
       padding: 13px 30px;
       border-radius: 30px;
       margin-right: 10px;
       font-weight: bold;
       cursor: pointer;
-      transition: background-color 0.1s ease-in-out;
+      transition: background-color 0.2s ease-in-out;
 
       &:hover {
         background-color: darken(#f9f9f9, 2%);
@@ -31,5 +32,27 @@
       }
     }
   }
+  
+   @media (max-width:1260px) {
+      margin-top: 30px;
+      padding-right: 0;
+   }
+   @media (max-width:1080px){
+      &Container{
+         padding-right: 0;
+         grid-template-columns: repeat(3, 1fr);
+         grid-template-rows: repeat(2, 1fr);
+         grid-column-gap: 10px;
+         grid-row-gap: 10px;
+      }
+   }
+   @media (max-width:730px){
+      &Container{
+         grid-template-columns: repeat(2, 1fr);
+         grid-template-rows: repeat(2, 1fr);
+         grid-column-gap: 10px;
+         grid-row-gap: 10px;
+      }
+   }
 }
 

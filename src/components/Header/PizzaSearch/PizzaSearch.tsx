@@ -1,32 +1,33 @@
 import React from 'react';
 import { useState } from 'react';
-import s from './PizzaSearch.module.scss'
 import { useDispatch } from 'react-redux';
 import { useEffect } from 'react';
 import { clearSearching, setSearching } from '../../../redux/pizzaSelectionReducer';
 import { useRef } from 'react';
 import { useCallback } from 'react';
+import s from './PizzaSearch.module.scss';
 import debounce from 'lodash.debounce';
 
 const PizzaSearch = () => {
-   const inputRef = useRef()
+   const inputRef = useRef<HTMLInputElement>(null)
    const dispatch = useDispatch()
    const [search, setSearch] = useState('');
    const [mainSearch, setMainSearch] = useState('');
-   const onChangeInput = (e) => {
+   const onChangeInput = (e: React.ChangeEvent<HTMLInputElement>): void => {
       setSearch(e.target.value)
       updateMainSearch(e.target.value)
    }
    const clearSearch = () => {
-      dispatch(clearSearching())
+      dispatch(clearSearching(''))
       setSearch('')
       setMainSearch('')
-      inputRef.current.focus()
+      inputRef.current?.focus()
+
    }
    const updateMainSearch = useCallback(
       debounce((str) => {
          setMainSearch(str)
-      }, 400),
+      }, 500),
       [],
    )
    useEffect(() => {

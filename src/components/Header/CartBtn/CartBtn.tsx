@@ -1,12 +1,13 @@
 import React from 'react';
-import s from './CartBtn.module.scss'
 import { useSelector, useDispatch } from 'react-redux';
 import { useEffect } from 'react';
 import { getTotalPizzaPrice } from '../../../redux/cartReducer';
+import s from './CartBtn.module.scss'
+import { useAppSelector } from '../../../hooks/hooks';
 
-const CartBtn = () => {
+const CartBtn: React.FC = () => {
    const dispatch = useDispatch()
-   const { totalPrice, cartPizzas } = useSelector(state => state.cart)
+   const { totalPrice, cartPizzas } = useAppSelector(state => state.cart)
    useEffect(() => {
       dispatch(getTotalPizzaPrice())
    }, [cartPizzas]);
@@ -45,7 +46,7 @@ const CartBtn = () => {
                   strokeLinejoin="round"
                />
             </svg>
-            <span>{cartPizzas.reduce((sum, obj) => { return sum + obj.count }, 0)}</span>
+            <span>{cartPizzas.reduce((sum: number, obj: any) => { return sum + obj.count }, 0)}</span>
          </div>
       </div>
    );

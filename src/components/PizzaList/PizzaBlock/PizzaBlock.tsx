@@ -6,12 +6,24 @@ import { useDispatch } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 import s from './PizzaBlock.module.scss'
 
-const PizzaBlock = ({ id, title, price, imageUrl, sizes, types, category, rating }) => {
+type PizzaBlockProps = {
+   id: number,
+   imageUrl: string,
+   title: string,
+   types: number[],
+   sizes: number[],
+   price: number,
+   count: number,
+   category: number,
+   rating: number
+}
+
+const PizzaBlock: React.FC<PizzaBlockProps> = ({ id, title, price, imageUrl, sizes, types, category, rating }) => {
    const dispatch = useDispatch()
    const [activeType, setActiveType] = useState(0);
    const [activeSize, setActiveSize] = useState(0);
-   const typesNames = ['тонкое', 'традиционное']
-   const newId = Number(id + String(activeType) + String(activeSize))
+   const typesNames: string[] = ['тонкое', 'традиционное']
+   const newId: number = Number(id + String(activeType) + String(activeSize))
    const addToCart = () => {
       const addingPizza = {
          id: newId,

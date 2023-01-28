@@ -8,20 +8,13 @@ export const getPizzaItems = createAsyncThunk(
       return response.data
    }
 )
-// export const getOnePizzaItem = createAsyncThunk(
-//    'paginator/getOnePizzaItem',
-//    async function ({ id }) {
-//       const response = await api.getOnePizza(id)
-//       return response.data
-//    }
-// )
 
 const paginationReducer = createSlice({
    name: 'pagination',
    initialState: {
       currentPage: 1,
       perPage: 10,
-      totalCount: 30,
+      totalCount: 10,
       // потому что mockapi не возвращает в запросе длину массива 
       pizzaItems: [],
       isLoading: null
@@ -31,12 +24,19 @@ const paginationReducer = createSlice({
       changeCurrentPage(state, action) {
          state.currentPage += action.payload
       },
+      setCurrentPage(state, action) {
+         state.currentPage = action.payload
+      },
+      changeCurrentPage(state, action) {
+         state.currentPage += 1
+      },
    },
    extraReducers: {
       [getPizzaItems.pending]: (state, action) => {
          state.isLoading = true
       },
       [getPizzaItems.fulfilled]: (state, action) => {
+         // state.pizzaItems = [...state.pizzaItems, ...action.payload]
          state.pizzaItems = action.payload
          state.isLoading = false
       }
@@ -44,4 +44,4 @@ const paginationReducer = createSlice({
 })
 
 export default paginationReducer.reducer
-export const { setLoading, changeCurrentPage } = paginationReducer.actions
+export const { setLoading, changeCurrentPage, setCurrentPage } = paginationReducer.actions

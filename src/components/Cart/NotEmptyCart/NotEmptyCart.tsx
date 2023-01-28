@@ -1,14 +1,27 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
-import CartItem from '../../Cart/CartItem/CartItem';
+import CartItem from '../CartItem/CartItem';
 import { useSelector, useDispatch } from 'react-redux';
 import { getTotalPizzaPrice, removeAllPizzaFromCart } from '../../../redux/cartReducer';
 import { useEffect } from 'react';
 import s from './NotEmptyCart.module.scss';
+import { useAppSelector } from '../../../hooks/hooks';
 
-const NotEmptyCart = () => {
+type pizza = {
+   id: number,
+   imageUrl: string,
+   title: string,
+   types: number[],
+   sizes: number[],
+   price: number,
+   count: number,
+   category: number,
+   rating: number
+}
+
+const NotEmptyCart: React.FC = () => {
    const dispatch = useDispatch()
-   const { cartPizzas, totalPrice } = useSelector(state => state.cart)
+   const { cartPizzas, totalPrice } = useAppSelector(state => state.cart)
    useEffect(() => {
       dispatch(getTotalPizzaPrice())
    }, [cartPizzas]);
@@ -35,13 +48,13 @@ const NotEmptyCart = () => {
                </div>
             </div>
             <div className={s.contentItems}>
-               {cartPizzas.map(pizza => <CartItem key={pizza.id} {...pizza} />)}
+               {cartPizzas.map((pizza: pizza) => <CartItem key={pizza.id} {...pizza} />)}
 
             </div>
             <div className={s.cartBottom}>
                <div className={s.cartBottomDetails}>
                   <span> Всего пицц:
-                     <b> {cartPizzas.reduce((sum, obj) => {
+                     <b> {cartPizzas.reduce((sum: number, obj: any) => {
                         return sum + obj.count
                      }, 0)}
                      </b>

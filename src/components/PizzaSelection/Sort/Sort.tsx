@@ -4,24 +4,27 @@ import { useDispatch, useSelector } from 'react-redux';
 import { setSortType } from '../../../redux/pizzaSelectionReducer';
 import { useEffect } from 'react';
 import s from './Sort.module.scss'
+import { useAppSelector } from '../../../hooks/hooks';
 
-const Sort = () => {
+
+
+const Sort: React.FC = () => {
    const dispatch = useDispatch()
-   const { sortType } = useSelector(state => state.selection)
-   const sortArr = ['популярности', 'цене', 'алфавиту']
-   const sortArrBack = ['rating', 'price', 'title']
+   const { sortType } = useAppSelector(state => state.selection)
+   const sortArr: string[] = ['популярности', 'цене', 'алфавиту']
+   const sortArrBack: string[] = ['rating', 'price', 'title']
    const [open, setOpen] = useState(false);
    const [activeIndex, setActiveIndex] = useState(0);
-   const sortRef = useRef()
-   const changeSort = (i) => {
+   const sortRef = useRef<HTMLDivElement>(null)
+   const changeSort = (i: number) => {
       setActiveIndex(i)
       dispatch(setSortType(sortArrBack[i]))
       setOpen(false)
    }
 
    useEffect(() => {
-      const handleClickOutside = (e) => {
-         if (!e.composedPath().includes(sortRef.current)) setOpen(false)
+      const handleClickOutside = (e: MouseEvent) => {
+         if (sortRef.current && !e.composedPath().includes(sortRef.current)) setOpen(false)
       }
       document.body.addEventListener('click', handleClickOutside)
       return () => {
@@ -51,7 +54,7 @@ const Sort = () => {
             <span onClick={() => setOpen(!open)}>{sortArr[activeIndex]}</span>
          </div>
          {open &&
-            <div className={s.sort__popup}>
+            <div className={s.sortPopup}>
                <ul>
                   {sortArr.map((el, i) =>
                      <li key={i} className={activeIndex === i ? s.active : ''} onClick={() => changeSort(i)}>{el}</li>

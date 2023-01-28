@@ -1,0 +1,8 @@
+.contentTop {
+   display: flex;
+   align-items: center;
+   justify-content: space-between;
+   @media (max-width:1260px) {
+      flex-direction: column-reverse;
+   }
+  }

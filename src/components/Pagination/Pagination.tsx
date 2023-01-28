@@ -1,6 +1,6 @@
 import React from 'react';
 import classes from './Pagination.module.scss'
-const Pagination = () => {
+const Pagination: React.FC = () => {
    return (
       <div>
       </div>

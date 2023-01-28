@@ -3,7 +3,7 @@ import { NavLink } from 'react-router-dom';
 import EmptyCartImg from '../../../assets/img/empty-cart.png'
 import s from './EmptyCart.module.scss'
 
-const EmptyCart = (props) => {
+const EmptyCart: React.FC = () => {
    return (
       <div>
          <div className={`${s.cart} ${s.cartEmpty}`}>
