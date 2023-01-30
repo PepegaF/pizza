@@ -1,21 +1,19 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 type pizza = {
    id: number,
    imageUrl: string,
    title: string,
-   types: number[],
-   sizes: number[],
+   type: string,
+   size: number,
    price: number,
    count: number,
-   category: number,
-   rating: number
 }
-interface pizzaSelectionState {
+interface pizzaCartState {
    totalPrice: number,
    cartPizzas: pizza[]
 }
-const initialState: pizzaSelectionState = {
+const initialState: pizzaCartState = {
    totalPrice: 0,
    cartPizzas: [
       // {
@@ -38,22 +36,22 @@ const initialState: pizzaSelectionState = {
    ]
 }
 
-export const pizzaSelectionReducer = createSlice({
+export const pizzaCartReducer = createSlice({
    name: 'cart',
    initialState,
    reducers: {
-      addPizzaToCart(state, action) {
-         const findItem = state.cartPizzas.find(obj => obj.id === action.payload.id && obj.types === action.payload.types && obj.sizes === action.payload.sizes)
+      addPizzaToCart(state, action: PayloadAction<pizza>) {
+         const findItem = state.cartPizzas.find(obj => obj.id === action.payload.id && obj.type === action.payload.type && obj.size === action.payload.size)
          findItem ? findItem.count++ : state.cartPizzas.push({ ...action.payload, count: 1 })
       },
-      minusPizza(state, action) {
+      minusPizza(state, action: PayloadAction<number>) {
          const findItem = state.cartPizzas.find(obj => obj.id === action.payload)
          if (findItem) {
             findItem.count--
             if (findItem.count < 1) state.cartPizzas = state.cartPizzas.filter(item => item.id !== action.payload)
          }
       },
-      removePizzaFromCart(state, action) {
+      removePizzaFromCart(state, action: PayloadAction<number>) {
          state.cartPizzas = state.cartPizzas.filter(item => item.id !== action.payload)
       },
       removeAllPizzaFromCart(state) {
@@ -67,5 +65,5 @@ export const pizzaSelectionReducer = createSlice({
    }
 })
 
-export default pizzaSelectionReducer.reducer
-export const { addPizzaToCart, removePizzaFromCart, removeAllPizzaFromCart, minusPizza, getTotalPizzaPrice } = pizzaSelectionReducer.actions
+export default pizzaCartReducer.reducer
+export const { addPizzaToCart, removePizzaFromCart, removeAllPizzaFromCart, minusPizza, getTotalPizzaPrice } = pizzaCartReducer.actions

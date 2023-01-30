@@ -2,9 +2,9 @@ import React from 'react';
 import { useState } from 'react';
 import { addPizzaToCart } from '../../../redux/cartReducer';
 import Button from './Button/Button';
-import { useDispatch } from 'react-redux';
 import { NavLink } from 'react-router-dom';
 import s from './PizzaBlock.module.scss'
+import { useAppDispatch } from './../../../hooks/hooks';
 
 type PizzaBlockProps = {
    id: number,
@@ -19,7 +19,7 @@ type PizzaBlockProps = {
 }
 
 const PizzaBlock: React.FC<PizzaBlockProps> = ({ id, title, price, imageUrl, sizes, types, category, rating }) => {
-   const dispatch = useDispatch()
+   const dispatch = useAppDispatch()
    const [activeType, setActiveType] = useState(0);
    const [activeSize, setActiveSize] = useState(0);
    const typesNames: string[] = ['тонкое', 'традиционное']
@@ -29,11 +29,12 @@ const PizzaBlock: React.FC<PizzaBlockProps> = ({ id, title, price, imageUrl, siz
          id: newId,
          imageUrl,
          title,
-         types: typesNames[activeType],
-         sizes: sizes[activeSize],
+         type: typesNames[activeType],
+         size: sizes[activeSize],
          price,
          category,
-         rating
+         rating,
+         count: 0
       }
       dispatch(addPizzaToCart(addingPizza))
    }

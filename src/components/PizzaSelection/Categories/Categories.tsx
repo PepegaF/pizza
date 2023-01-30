@@ -1,12 +1,11 @@
 import { useState, useEffect } from 'react';
 import React from 'react';
-import { useDispatch, useSelector } from 'react-redux';
 import { setCategoriesType } from '../../../redux/pizzaSelectionReducer';
 import s from './Categories.module.scss'
-import { useAppSelector } from '../../../hooks/hooks';
+import { useAppDispatch, useAppSelector } from '../../../hooks/hooks';
 
 const Categories: React.FC = () => {
-   const dispatch = useDispatch()
+   const dispatch = useAppDispatch()
    const { categoriesType } = useAppSelector(state => state.selection)
    const listOfCategories: string[] = ['Все', 'Мясные', 'Вегетарианские', 'Гриль', 'Острые', 'Закрытые']
    const [activeIndex, setActiveIndex] = useState(0);

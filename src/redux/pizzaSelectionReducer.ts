@@ -1,26 +1,35 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+
+
+export interface pizzaSelectionState {
+   sortType: string,
+   categoriesType: number,
+   searching: string,
+   currentPage?: number
+}
+const initialState: pizzaSelectionState = {
+   sortType: 'rating',
+   categoriesType: 0,
+   searching: ''
+}
 
 export const pizzaSelectionReducer = createSlice({
    name: 'selection',
-   initialState: {
-      sortType: 'rating',
-      categoriesType: 0,
-      searching: ''
-   },
+   initialState,
    reducers: {
-      setSortType(state, action) {
+      setSortType(state, action: PayloadAction<string>) {
          state.sortType = action.payload
       },
-      setCategoriesType(state, action) {
+      setCategoriesType(state, action: PayloadAction<number>) {
          state.categoriesType = action.payload
       },
-      setSearching(state, action) {
+      setSearching(state, action: PayloadAction<string>) {
          state.searching = action.payload
       },
-      clearSearching(state, action) {
+      clearSearching(state, action: PayloadAction<string>) {
          state.searching = action.payload
       },
-      setSelection(state, action) {
+      setSelection(state, action: PayloadAction<pizzaSelectionState>) {
          state.searching = action.payload.searching
          state.categoriesType = action.payload.categoriesType
          state.sortType = action.payload.sortType

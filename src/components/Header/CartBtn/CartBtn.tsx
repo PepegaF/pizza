@@ -3,10 +3,10 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useEffect } from 'react';
 import { getTotalPizzaPrice } from '../../../redux/cartReducer';
 import s from './CartBtn.module.scss'
-import { useAppSelector } from '../../../hooks/hooks';
+import { useAppDispatch, useAppSelector } from '../../../hooks/hooks';
 
 const CartBtn: React.FC = () => {
-   const dispatch = useDispatch()
+   const dispatch = useAppDispatch()
    const { totalPrice, cartPizzas } = useAppSelector(state => state.cart)
    useEffect(() => {
       dispatch(getTotalPizzaPrice())

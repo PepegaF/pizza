@@ -7,10 +7,11 @@ import { useRef } from 'react';
 import { useCallback } from 'react';
 import s from './PizzaSearch.module.scss';
 import debounce from 'lodash.debounce';
+import { useAppDispatch } from '../../../hooks/hooks';
 
 const PizzaSearch = () => {
    const inputRef = useRef<HTMLInputElement>(null)
-   const dispatch = useDispatch()
+   const dispatch = useAppDispatch()
    const [search, setSearch] = useState('');
    const [mainSearch, setMainSearch] = useState('');
    const onChangeInput = (e: React.ChangeEvent<HTMLInputElement>): void => {

@@ -1,8 +1,10 @@
 .content{
    &Title {
+      display:flex;
+      justify-content: center;
       font-weight: 700;
       font-size: 36px;
-       margin: 35px 0;
+      margin: 35px 0;
      }
    
      &Items {

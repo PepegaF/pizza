@@ -1,26 +1,23 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 import CartItem from '../CartItem/CartItem';
-import { useSelector, useDispatch } from 'react-redux';
 import { getTotalPizzaPrice, removeAllPizzaFromCart } from '../../../redux/cartReducer';
 import { useEffect } from 'react';
 import s from './NotEmptyCart.module.scss';
-import { useAppSelector } from '../../../hooks/hooks';
+import { useAppDispatch, useAppSelector } from '../../../hooks/hooks';
 
 type pizza = {
    id: number,
    imageUrl: string,
    title: string,
-   types: number[],
-   sizes: number[],
+   type: string,
+   size: number,
    price: number,
    count: number,
-   category: number,
-   rating: number
 }
 
 const NotEmptyCart: React.FC = () => {
-   const dispatch = useDispatch()
+   const dispatch = useAppDispatch()
    const { cartPizzas, totalPrice } = useAppSelector(state => state.cart)
    useEffect(() => {
       dispatch(getTotalPizzaPrice())

@@ -1,15 +1,14 @@
 import React from 'react';
 import { useState, useRef } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
 import { setSortType } from '../../../redux/pizzaSelectionReducer';
 import { useEffect } from 'react';
 import s from './Sort.module.scss'
-import { useAppSelector } from '../../../hooks/hooks';
+import { useAppDispatch, useAppSelector } from '../../../hooks/hooks';
 
 
 
 const Sort: React.FC = () => {
-   const dispatch = useDispatch()
+   const dispatch = useAppDispatch()
    const { sortType } = useAppSelector(state => state.selection)
    const sortArr: string[] = ['популярности', 'цене', 'алфавиту']
    const sortArrBack: string[] = ['rating', 'price', 'title']
