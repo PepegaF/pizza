@@ -1,12 +1,8 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { pizzaSelectionState } from "./types";
 
 
-export interface pizzaSelectionState {
-   sortType: string,
-   categoriesType: number,
-   searching: string,
-   currentPage?: number
-}
+
 const initialState: pizzaSelectionState = {
    sortType: 'rating',
    categoriesType: 0,
@@ -31,7 +27,7 @@ export const pizzaSelectionReducer = createSlice({
       },
       setSelection(state, action: PayloadAction<pizzaSelectionState>) {
          state.searching = action.payload.searching
-         state.categoriesType = action.payload.categoriesType
+         state.categoriesType = Number(action.payload.categoriesType)
          state.sortType = action.payload.sortType
       }
    }

@@ -7,9 +7,10 @@ import { useRef } from 'react';
 import { useCallback } from 'react';
 import s from './PizzaSearch.module.scss';
 import debounce from 'lodash.debounce';
-import { useAppDispatch } from '../../../hooks/hooks';
+import { useAppDispatch, useAppSelector } from '../../../hooks/hooks';
 
 const PizzaSearch = () => {
+   const { searching } = useAppSelector(state => state.selection)
    const inputRef = useRef<HTMLInputElement>(null)
    const dispatch = useAppDispatch()
    const [search, setSearch] = useState('');
@@ -33,7 +34,11 @@ const PizzaSearch = () => {
    )
    useEffect(() => {
       dispatch(setSearching(mainSearch))
-   }, [mainSearch]);
+      if (searching) {
+         setSearch(searching)
+         setMainSearch(searching)
+      }
+   }, [mainSearch, searching]);
    return (
       <div className={s.root}>
          <input className={s.input} ref={inputRef} type="text" value={search} onChange={(e) => onChangeInput(e)} placeholder='Поиск пиццы...' ></input>

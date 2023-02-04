@@ -1,7 +1,6 @@
-import React from 'react';
+import React, { memo } from 'react';
 import PizzaBlock from './PizzaBlock/PizzaBlock';
 import Skeleton from './PizzaBlock/Skeleton';
-import { addPizzaToCart } from '../../redux/cartReducer';
 import s from './PizzaList.module.scss'
 
 type pizzaItemsType = {
@@ -28,11 +27,10 @@ const PizzaList: React.FC<PizzaListProps> = ({ pizzaItems, isLoading }) => {
             {isLoading
                ? [...new Array(6)].map((p, i) => <Skeleton key={i} />)
                : pizzaItems.map(p => <PizzaBlock key={p.id} {...p} />)
-               //: pizzaItems.filter((obj) => obj.title.toLowerCase().includes(searching.toLowerCase())).map(p => <PizzaBlock key={p.id} {...p} />)
             }
          </div>
       </>
    );
 }
 
-export default PizzaList;
+export default memo(PizzaList);

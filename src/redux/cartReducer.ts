@@ -1,39 +1,11 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { getCartFromLS } from './../utils/getCartFromLS';
+import { pizza, pizzaCartState } from "./types";
 
-type pizza = {
-   id: number,
-   imageUrl: string,
-   title: string,
-   type: string,
-   size: number,
-   price: number,
-   count: number,
-}
-interface pizzaCartState {
-   totalPrice: number,
-   cartPizzas: pizza[]
-}
+
 const initialState: pizzaCartState = {
    totalPrice: 0,
-   cartPizzas: [
-      // {
-      //    "id": 0,
-      //    "imageUrl": "https://dodopizza.azureedge.net/static/Img/Products/f035c7f46c0844069722f2bb3ee9f113_584x584.jpeg",
-      //    "title": "Пепперони Фреш с перцем",
-      //    "types": [
-      //       0,
-      //       1
-      //    ],
-      //    "sizes": [
-      //       26,
-      //       30,
-      //       40
-      //    ],
-      //    "price": 803,
-      //    "category": 1,
-      //    "rating": 4
-      // },
-   ]
+   cartPizzas: getCartFromLS()
 }
 
 export const pizzaCartReducer = createSlice({

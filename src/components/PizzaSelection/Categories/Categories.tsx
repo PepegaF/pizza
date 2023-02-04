@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import React from 'react';
 import { setCategoriesType } from '../../../redux/pizzaSelectionReducer';
 import s from './Categories.module.scss'
@@ -9,10 +9,13 @@ const Categories: React.FC = () => {
    const { categoriesType } = useAppSelector(state => state.selection)
    const listOfCategories: string[] = ['Все', 'Мясные', 'Вегетарианские', 'Гриль', 'Острые', 'Закрытые']
    const [activeIndex, setActiveIndex] = useState(0);
-   const changeCategories = (i: number): void => {
-      setActiveIndex(i)
-      dispatch(setCategoriesType(i))
-   }
+   const changeCategories = useCallback(
+      (i: number) => {
+         setActiveIndex(i)
+         dispatch(setCategoriesType(i))
+      }, []
+   )
+
    useEffect(() => {
       setActiveIndex(Number(categoriesType))
    }, [categoriesType]);

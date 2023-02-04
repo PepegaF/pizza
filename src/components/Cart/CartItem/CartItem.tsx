@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { memo } from 'react';
 import { useDispatch } from 'react-redux';
 import { addPizzaToCart, minusPizza, removePizzaFromCart } from '../../../redux/cartReducer';
 import s from './CartItem.module.scss'
@@ -65,4 +65,4 @@ const CartItem: React.FC<CartItemProps> = ({ id, imageUrl, title, type, size, pr
    );
 }
 
-export default CartItem;
+export default memo(CartItem);

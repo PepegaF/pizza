@@ -1,27 +1,8 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import api from '../API/api';
+import { getPizzas, paginationState, pizzaItem } from "./types";
 
-type getPizzas = Record<string, string>
 
-type pizzaItem = {
-   id: number,
-   imageUrl: string,
-   title: string,
-   types: number[],
-   sizes: number[],
-   price: number,
-   count: number,
-   category: number,
-   rating: number
-}
-
-interface paginationState {
-   currentPage: number,
-   perPage: number,
-   totalCount: number,
-   pizzaItems: pizzaItem[],
-   isLoading: boolean | null
-}
 
 export const getPizzaItems = createAsyncThunk<pizzaItem[], getPizzas>(
    'paginator/getPizzaItems',
