@@ -13,12 +13,14 @@ import { useAppSelector } from '../hooks/hooks';
 import { useAppDispatch } from './../hooks/hooks';
 import { useMemo } from 'react';
 import { pizzaSelectionState } from '../redux/types';
+import { useRef } from 'react';
 
 const Home: React.FC = () => {
-   console.log('render')
+   const isMounted = useRef(false)
    const location = useLocation().search
    const navigate = useNavigate()
    const dispatch = useAppDispatch()
+   const { cartPizzas } = useAppSelector((state) => state.cart)
    const { sortType, categoriesType, searching } = useAppSelector(state => state.selection)
    const { currentPage, perPage, totalCount, pizzaItems, isLoading } = useAppSelector(state => state.pagination)
    const totalPages = useMemo(() => Math.ceil(totalCount / perPage), [totalCount, perPage])
@@ -29,6 +31,14 @@ const Home: React.FC = () => {
       const sort = `sortBy=${sortType}`
       dispatch(getPizzaItems({ sort, category, search, pagination }))
    }
+
+   useEffect(() => {
+      if (isMounted.current) {
+         const json = JSON.stringify(cartPizzas)
+         localStorage.setItem('cart', json)
+      }
+      isMounted.current = true
+   }, [cartPizzas])
 
    useEffect(() => {
       if (location) {

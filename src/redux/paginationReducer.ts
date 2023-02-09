@@ -15,7 +15,7 @@ export const getPizzaItems = createAsyncThunk<pizzaItem[], getPizzas>(
 
 const initialState: paginationState = {
    currentPage: 1,
-   perPage: 10,
+   perPage: 30,
    totalCount: 10,
    // потому что mockapi не возвращает в запросе длину массива 
    pizzaItems: [],

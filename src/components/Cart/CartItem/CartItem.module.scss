@@ -24,6 +24,10 @@
      flex-direction: column;
      justify-content: center;
      width: 40%;
+     @media (max-width:900px) {
+      margin-left: 10px;
+      width: 30%;
+  }
 
     h3 {
        font-weight: bold;
@@ -43,6 +47,9 @@
      align-items: center;
      justify-content: space-between;
      width: 13%;
+     @media (max-width:700px) {
+         flex-direction: column;
+     }
 
      &Minus {
        svg {
@@ -55,6 +62,8 @@
      b {
        font-size: 22px;
      }
+      
+      
    }
 
    &Price {

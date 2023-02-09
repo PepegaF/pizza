@@ -2,7 +2,7 @@
 
 .categories {
   &Container {
-   padding-right: 30px;
+   padding-right: 10px;
    display: grid;
    grid-template-columns: repeat(6, 1fr);
    grid-template-rows: repeat(1, 1fr);
