@@ -15,8 +15,8 @@ export const getPizzaItems = createAsyncThunk<pizzaItem[], getPizzas>(
 
 const initialState: paginationState = {
    currentPage: 1,
-   perPage: 30,
-   totalCount: 10,
+   perPage: 8,
+   totalCount: 20,
    // потому что mockapi не возвращает в запросе длину массива 
    pizzaItems: [],
    isLoading: null
@@ -27,14 +27,11 @@ const paginationReducer = createSlice({
    initialState,
    reducers: {
       changeCurrentPage(state, action) {
-         state.currentPage += action.payload
+         state.currentPage = action.payload
       },
       setCurrentPage(state, action) {
          state.currentPage = action.payload
       },
-      // changeCurrentPage(state) {
-      //    state.currentPage += 1
-      // },
    },
    extraReducers: (builder) => {
       builder.addCase(getPizzaItems.pending, (state) => {

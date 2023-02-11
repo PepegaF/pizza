@@ -62,14 +62,14 @@ const Home: React.FC = () => {
 
    useEffect(() => {
       window.scrollTo(0, 0)
-   }, []);
+   }, [currentPage]);
 
    return (
       <div className="container">
          <PizzaSelection />
          <PizzaList pizzaItems={pizzaItems} isLoading={isLoading} />
          {/* <div ref={ref} className='lastElement'></div> */}
-         {/* <Pagination /> */}
+         <Pagination totalPages={totalPages} currentPage={currentPage} />
       </div>
    );
 }

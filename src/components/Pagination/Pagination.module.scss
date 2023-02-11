@@ -1,23 +1,28 @@
-.usersNav{
-   margin-bottom: 15px;
-}
-.btnLeft{
-   margin-right: 10px;
-}
-.btnRight{
-   margin-left: 10px;
-}
-.selectedPage{
-   margin-left: 5px;
-   font-size: 26px;
-   font-weight: 700;
-}
-.otherPage{
-   margin-left: 5px;
-}
-.otherPage:first-child{
-   margin-left: 0;
-}
-.span{
-   cursor:pointer;
+@import '../../scss/variables.scss';
+.pagination{
+   display: flex;
+   align-items: center;
+   margin-top: 10px;
+   justify-content: center;
+   .page{
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      margin-right: 10px;
+      cursor:pointer;
+      color: $black;
+      border: 2px solid  $orange;
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+   }
+   .page:last-child{
+      margin-right: 0;
+   }
+   .selectedPage{
+      width: 44px;
+      height: 44px;
+      font-size: 26px;
+      font-weight: 700;
+   }
 }
